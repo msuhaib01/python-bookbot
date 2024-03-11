@@ -1,11 +1,33 @@
 def main():
     path_to_file = "./books/frankenstein.txt"
     text = get_book_text(path_to_file)
+
+    print(f"--- Begin report of {path_to_file} ---")
+    print()
+    print_report(text)
+
+def sort_on(dict):
+    return dict["num"]
+
+
+def print_report(text):
     num_words = get_num_words(text)
-    print(num_words)
     counts = get_count_letters(text)
-    print(counts)
-    
+    print(f"{num_words} words found in the document.")
+    print()
+
+    array = []
+    for key in counts.keys():
+        array.append({"char":key ,
+                      "num": counts[key]})
+        
+    array.sort(reverse=True, key=sort_on)
+    for item in array:
+        if(item["char"].isalpha()):
+            print(f"The '{item["char"]}' character was found {item["num"]} times.")
+    print()
+
+    print("--- End report ---")
 
 def get_count_letters(text):
     lower_case_text = text.lower()
